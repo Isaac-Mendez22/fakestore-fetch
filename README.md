@@ -12,3 +12,5 @@ En este ejercicio se uso:
 6. Await
 7. Colocación de elementos de un arreglo de un html a JSON por medio de fetch.
 ```
+se agrega vista previa del index.html
+![index](https://raw.githubusercontent.com/Isaac-Mendez22/fakestore-fetch/refs/heads/main/imagenes/pagina%20productos.png)
