@@ -12,6 +12,7 @@ function getData(cat){
             console.log(response);
             response.json().then((res) => {
             //console.log(res.length);
+            //console.log(res[0].title);
             createCards(res);
             
                 });
@@ -23,16 +24,14 @@ function getData(cat){
             ${err.message}
         </div>`);
         });
-
-    
 }//getData
 
-    getData();
+getData("");
 
 
 function getCategories(){
-    const options ={"method" : "GET"};
-    fetch (URLMain + "categories/", options)
+    const options ={"method":"GET"};
+    fetch (URLMain+"categories/", options)
     .then((response) =>{ // en espera de la promesa
         response.json().then((res)=>{
             //console.log(res.length);
@@ -52,27 +51,55 @@ function getCategories(){
             });
         
         }//getCategories
+getCategories("");
 
 
         //funcion de crear cards
-        function crearCards(prods){
+        function createCards(prods){
             //meter en cards 20 productos de la data
             mainProds.innerHTML=""; //escribir mainProds en el html
             //usar un for para la condición
             //for (let inicio; condicion[i]; contador n++)
-            //p de productos 
-            for (let p = 0; p < prods.length; p++){
-                console.log(prods[p].title)
-                console.log(prods[p].image)
-                mainProds.innerAdjacentHTML("beforeend", 
+            for (let i = 0; i < prods.length; i++) {
+                const modalId = `ExampleModal-${i}`;
+                console.log(prods[i].title)
+                console.log(prods[i].image)
+                mainProds.insertAdjacentHTML("beforeend",//es insert no confundir con inner
+                    
+                    //primera parte cards de la página
+
+                    // segunda parte modal del area de obtener mas información
                 
                     `<div class="card" style="width: 18rem;">
-                    <img src="${prods[p].image}" class="card-img-top" alt="${prods[p].title}">
+                    <img src="${prods[i].image}" class="card-img-top" alt="${prods[i].title}">
                     <div class="card-body">
-                    <h5 class="card-title">${prods[p].title}</h5>
-                    <p class="card-text">${prods[p].description.slice(0,60)} precio $ ${prods[p].price}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>`);
+                    <h5 class="card-title">${prods[i].title}</h5>
+                    <p class="card-text">${prods[i].description.slice(0,60)} precio $ ${prods[i].price}</p>
+                    <a href="#" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#${modalId}">Saber mas del producto</a>
+        
+        
+        
+        <!-- Modal -->
+        <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalTitle-${i}">${prods[i].title}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            ${prods[i].description} <b><br>Precio=$ ${prods[i].price}</b>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Comprar</button>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        `)
                 }
-        };
+        }; // fin de las cards y el modal
+        //fin del programa
